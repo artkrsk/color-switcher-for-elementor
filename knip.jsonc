@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  // Both bundles are build entries declared in project.config.js, not imports.
+  // (Playwright's config and global-setup are discovered by knip's own plugin.)
+  "entry": ["src/ts/boot.ts", "src/ts/editor/index.ts", "project.config.js"],
+  // Barrels re-export for consumers inside the bundle; knip cannot see that a
+  // type-only re-export is used once its consumer imports the barrel path.
+  "ignoreExportsUsedInFile": true,
+  "project": ["src/ts/**/*.ts", "tests/**/*.ts"],
+  // fallow is invoked by CI and lefthook rather than imported, so knip can't
+  // see it. jsonc rather than json so per-entry reasoning like this can live
+  // next to the entry it explains.
+  "ignoreDependencies": ["fallow"]
+}

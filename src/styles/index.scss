@@ -1,0 +1,23 @@
+// Arts Color Switcher for Elementor — the engine stylesheet, compiled by
+// arts-wp into src/php/libraries/color-switcher-for-elementor/color-switcher-for-elementor.css.
+//
+// Architecture:
+// - Enqueued unconditionally (see Managers\Assets::enqueue_frontend); the
+//   color-mix layer itself is emitted through kit control selectors, not this
+//   file.
+// - One registered scalar (--arts-cs-p, in _state.scss) drives everything;
+//   _scrub.scss binds it to a native view-timeline where supported.
+// - The toggle is a CSS state machine off the two <html> attributes the head
+//   script stamps before first paint: _toggle.scss is the shared control base,
+//   _segmented.scss the track geometry Joined and Switch share, then one
+//   partial per skin.
+// - The @use order below IS the cascade order — _segmented must follow
+//   _toggle (both sides of the gap fight are (0,2,0), source order decides).
+@use 'state';
+@use 'scrub';
+@use 'toggle';
+@use 'icon';
+@use 'segmented';
+@use 'switch';
+@use 'buttons';
+@use 'dropdown';

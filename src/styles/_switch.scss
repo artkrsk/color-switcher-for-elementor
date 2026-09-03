@@ -1,0 +1,73 @@
+@use 'mixins';
+
+.arts-cs-toggle_switch.arts-cs-toggle_switch {
+  @include mixins.bare-button;
+}
+
+// Switch: two segments, and the knob follows the SCALAR rather than the
+// stored preference — it has no third position to say anything else with, so
+// it shows how far the palette has actually turned. Riding --arts-cs-p makes
+// a binary flip glide in lockstep with the colours (the body transition) and
+// makes the knob literally track a scrubbed zone, every tier included: all
+// three animate the scalar on body, and it inherits. The icons carry no paint
+// of their own: which one is under the knob is the knob's job to say, and the
+// lit/dim reading is the author's, through the Icons tabs' Normal/Hover/Active
+// colours. Nothing here is given a size either: the track is what its icons
+// make it, so Icon Size, Track Padding and Spacing are its only dimensions.
+.arts-cs-toggle_switch {
+  // The icon paint is arithmetic on the scalar, like the knob — never a
+  // selector on the html attribute, which a scrub deliberately never flips.
+  // The widget's colour controls emit plain vars on the root (a {{VALUE}}
+  // template cannot carry a blend: a Global-linked value bypasses it —
+  // see Widgets\Toggle::SWITCH_ROOT), and the blends live here. With no
+  // authored colours every var falls back to currentcolor and the mixes
+  // collapse to it, so zero-config stays zero-config. Resting paint is the
+  // Normal colour pushed toward the Active one by how chosen this icon is.
+  .arts-cs-toggle__icon {
+    --arts-cs-sw-rest: color-mix(
+      in oklab,
+      var(--arts-cs-sw-icon, currentcolor),
+      var(--arts-cs-sw-icon-active, var(--arts-cs-sw-icon, currentcolor))
+        calc(var(--arts-cs-sw-chosen) * 100%)
+    );
+
+    position: relative;
+    z-index: 1;
+    justify-content: center;
+    padding: 0.25em;
+    color: var(--arts-cs-sw-rest);
+  }
+
+  .arts-cs-toggle__icon_default {
+    --arts-cs-sw-chosen: calc(1 - var(--arts-cs-p));
+  }
+
+  .arts-cs-toggle__icon_alt {
+    --arts-cs-sw-chosen: var(--arts-cs-p);
+  }
+
+  // Hovered paint: pushed toward the Hover colour by how NOT-chosen the icon
+  // is — "hover never repaints what is already chosen", as arithmetic.
+  &:hover .arts-cs-toggle__icon {
+    color: color-mix(
+      in oklab,
+      var(--arts-cs-sw-rest),
+      var(--arts-cs-sw-icon-hover, var(--arts-cs-sw-rest))
+        calc((1 - var(--arts-cs-sw-chosen)) * 100%)
+    );
+  }
+
+  .arts-cs-toggle__track {
+    --arts-cs-seg-index: var(--arts-cs-p);
+
+    background-color: color-mix(in srgb, currentcolor 12%, transparent);
+  }
+
+  // No transform transition of its own — the shared 0.3s would chase the
+  // per-frame scrub value with a 0.3s lag, the .e-con background failure over
+  // again. Binary flips still animate: the scalar's own body transition is
+  // the motion, which is exactly what puts the knob in sync with the colours.
+  .arts-cs-toggle__knob {
+    transition: opacity 0.2s;
+  }
+}

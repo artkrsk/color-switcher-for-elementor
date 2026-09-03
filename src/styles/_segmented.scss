@@ -1,0 +1,46 @@
+// The segmented geometry, stated once and derived from there — the same model
+// as the pricing switcher on artemsemkin.com, which is the same control.
+// Everything the sliding mark needs comes from three numbers: the track's own
+// padding, the gap between segments, and how many segments there are. So the
+// mark sits exactly inside the padding box, every segment is exactly one
+// column, and the travel is one column PLUS one gap. Hardcoding halves and
+// thirds instead was what left the two layouts looking alike.
+// Doubled, and after the shared layout in _toggle.scss, so the 0.5em gap
+// there cannot win: a gap the mark's travel knows nothing about is a mark
+// that lands short.
+.arts-cs-toggle_joined.arts-cs-toggle_joined,
+.arts-cs-toggle_switch .arts-cs-toggle__track {
+  position: relative;
+
+  // Grid rather than flex, because `1fr` columns in a shrink-to-fit box all
+  // take the width of the largest, and `flex: 1 1 0` there does not: an inline
+  // flex container has no free space to distribute, so every option keeps its
+  // own content width and one column of travel stops matching the columns it
+  // travels between. Measured: 126/104/99px of "equal" columns.
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: center;
+  gap: var(--arts-cs-seg-gap);
+  padding: var(--arts-cs-seg-pad);
+  border-radius: 999px;
+}
+
+// An absolutely positioned box resolves its percentages against the padding
+// box, so `100%` here is the track inside its border — which is why the same
+// two formulas hold whether or not the author gave the track one.
+.arts-cs-toggle__knob {
+  position: absolute;
+  top: var(--arts-cs-seg-pad);
+  left: var(--arts-cs-seg-pad);
+  width: calc(
+    (100% - var(--arts-cs-seg-pad) * 2 - var(--arts-cs-seg-gap) * (var(--arts-cs-seg-count) - 1)) /
+      var(--arts-cs-seg-count)
+  );
+  height: calc(100% - var(--arts-cs-seg-pad) * 2);
+  border-radius: inherit;
+  background-color: var(--arts-cs-toggle-active, color-mix(in srgb, currentcolor 22%, transparent));
+  pointer-events: none;
+  transform: translateX(calc(var(--arts-cs-seg-index) * (100% + var(--arts-cs-seg-gap))));
+  transition: transform 0.3s, opacity 0.2s;
+}

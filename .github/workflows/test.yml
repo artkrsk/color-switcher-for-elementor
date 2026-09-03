@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Supersede in-flight runs for the same ref so pushes don't pile up on the
+# single self-hosted runner.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    uses: artkrsk/wordpress-plugin-workflows/.github/workflows/test.yml@main
+    with:
+      zip_budget_mb: '0.5'
+      # The scope sniffs flag the unconditional frontend enqueue, which is a
+      # recorded decision (CLAUDE.md: the gate cost more than the ~4KB it
+      # withheld). NoStrategy: the bundle stays an ordinary footer script so
+      # it executes after the polyfill and Elementor's blocking footer scripts.
+      extra_plugin_check_ignore_codes: |
+        EnqueuedStylesScope
+        EnqueuedScriptsScope
+        NonBlockingScripts.NoStrategy
+      integration_suites: '["tests/php/phpunit.xml.dist"]'
+      wp_env_ports: '8894,8895'
+      run_e2e: true
+      # Firefox is not redundant here: it is the only tier anywhere in the repo
+      # that runs the scroll-timeline polyfill rather than a stub of it.
+      playwright_browsers: chromium firefox
+      e2e_command: pnpm exec playwright test
+      # coverage: true          # after `gh secret set CODECOV_TOKEN`
+      blueprint_check: true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

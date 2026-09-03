@@ -1,0 +1,99 @@
+@use 'mixins';
+
+// Buttons: every option on screen at once, and none of them painted by the
+// stylesheet — a Normal colour the author picks is the colour that renders,
+// with every state expressed through the widget's Normal/Hover/Active
+// controls rather than a built-in dim composing invisibly on top. The pinned
+// option's fill below is the one zero-config mark, so with two options and
+// nothing stored NEITHER carries it: the visitor has expressed nothing and
+// what they see is the author's design.
+.arts-cs-toggle__option.arts-cs-toggle__option {
+  @include mixins.bare-button;
+
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.35em 0.7em;
+}
+
+// Joined is one object, and the mark travelling to the pinned option is what
+// says so. Separate is a row of independent buttons with nothing to slide
+// within, so there the pinned button carries the fill itself.
+.arts-cs-toggle_joined.arts-cs-toggle_joined {
+  // The track's outline and nothing else — no divider lines between the
+  // segments. The travelling mark already says where the boundaries are, and
+  // lines on top of it were chrome fighting the movement.
+  border: 1px solid color-mix(in srgb, currentcolor 10%, transparent);
+  background-color: color-mix(in srgb, currentcolor 8%, transparent);
+}
+
+html[data-arts-cs-pref='default'] .arts-cs-toggle_joined[data-arts-cs-mode='cycle'],
+html[data-arts-cs-pref='alt'] .arts-cs-toggle_joined[data-arts-cs-mode='binary'] {
+  --arts-cs-seg-index: 1;
+}
+
+html[data-arts-cs-pref='alt'] .arts-cs-toggle_joined[data-arts-cs-mode='cycle'] {
+  --arts-cs-seg-index: 2;
+}
+
+// A two-option group with nothing pinned has nothing for the mark to sit on —
+// including a visitor who chose `system` through some other control.
+html:not([data-arts-cs-pref]) .arts-cs-toggle_joined[data-arts-cs-mode='binary'] .arts-cs-toggle__knob,
+html[data-arts-cs-pref='system'] .arts-cs-toggle_joined[data-arts-cs-mode='binary'] .arts-cs-toggle__knob {
+  opacity: 0;
+}
+
+// Separate reads the same gap the geometry does, and flush is its zero: the
+// buttons form one group whose inner corners square off so the seams stay
+// straight, while any Spacing hands every button its full radius back. Stated
+// as `min(value, --arts-cs-seg-flush)` — the flush length is 0 or huge, so
+// the min IS the condition. The seams themselves ride the author's Border
+// control: the widget suppresses each `+` sibling's left border the same way,
+// so 1px of border draws 1px between neighbours, never 2 — and never through
+// two stacked translucent lines, which an overlap would composite darker.
+.arts-cs-toggle_separate.arts-cs-toggle_separate {
+  gap: var(--arts-cs-seg-gap);
+
+  .arts-cs-toggle__option {
+    border-radius: min(999px, var(--arts-cs-seg-flush));
+  }
+
+  // The group's outer corners are nobody's inner edge, so they keep the full
+  // radius at any spacing.
+  .arts-cs-toggle__option:first-child {
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+  }
+
+  .arts-cs-toggle__option:last-child {
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+  }
+}
+
+// Which option is pinned, from the attribute the head script stamps rather
+// than from `aria-pressed`, which no script has corrected yet in the first
+// painted frame. The last selector is the unchosen state: with three options
+// System stands for it, and with two there is no System option to match, so
+// nothing lights up — which is exactly right. Toggle::option_states() spells
+// the same four out in PHP, because a control's `selectors` cannot loop.
+@mixin pinned-option($within: '') {
+  @each $state in system, default, alt {
+    html[data-arts-cs-pref='#{$state}']
+      #{$within}
+      .arts-cs-toggle__option[data-arts-cs-set='#{$state}'] {
+      @content;
+    }
+  }
+
+  html:not([data-arts-cs-pref]) #{$within} .arts-cs-toggle__option[data-arts-cs-set='system'] {
+    @content;
+  }
+}
+
+@include pinned-option('.arts-cs-toggle_separate') {
+  background-color: var(--arts-cs-toggle-active, color-mix(in srgb, currentcolor 22%, transparent));
+}

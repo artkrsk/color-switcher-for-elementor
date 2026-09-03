@@ -1,0 +1,116 @@
+// Dropdown: the platform's own control, borrowing the page's font and the
+// `color-scheme` the theme already declares, so its popup follows too.
+.arts-cs-toggle_dropdown .arts-cs-toggle__select {
+  padding: 0.3em 0.5em;
+  border: 1px solid color-mix(in srgb, currentcolor 25%, transparent);
+  border-radius: 0.25em;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+// Progressive enhancement: where a select can keep the platform's keyboard
+// and touch handling while handing the popup's paint to the page, the list
+// becomes a card the theme can turn. Invisible everywhere else — an
+// unsupported browser keeps the native picker above, and every selector in
+// here fails to parse there rather than half-applying.
+@supports (appearance: base-select) {
+  .arts-cs-toggle_dropdown .arts-cs-toggle__select {
+    // The spec requires opting in BOTH the select and its picker; one
+    // without the other keeps the native popup.
+    &,
+    &::picker(select) {
+      appearance: base-select;
+    }
+
+    // Stated, not left to the UA: themes reset `select` to block/full-width
+    // in their form styles, which drops the icon onto a second line, and not
+    // every engine ships the flex face Chrome does.
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+
+    // The chevron stays the platform's; only its answer to :open is ours.
+    // Both endpoints are explicit rotations — interpolating from the
+    // initial `none` is the one step engines still get wrong.
+    &::picker-icon {
+      transform: rotate(0deg);
+      transition: transform 0.2s;
+    }
+
+    &:open::picker-icon {
+      transform: rotate(180deg);
+    }
+
+    // The card. System colors only: the plugin ships no palette, and the
+    // `color-scheme` flip in _state.scss is what turns Canvas dark. Margin
+    // on both block sides so the gap survives the UA flipping the picker
+    // above the face when there is no room below.
+    &::picker(select) {
+      min-inline-size: anchor-size(inline);
+      margin-block: 0.25em;
+      padding: 0.25em;
+      border: 1px solid color-mix(in srgb, CanvasText 15%, transparent);
+      border-radius: 0.5em;
+      background-color: Canvas;
+      color: CanvasText;
+      box-shadow: 0 0.5em 1.5em -0.5em color-mix(in srgb, CanvasText 35%, transparent);
+
+      // Closed is the transition's BASE state so closing animates too;
+      // allow-discrete holds display (and top-layer membership, via
+      // overlay) until the fade is done.
+      opacity: 0;
+      translate: 0 -0.25em;
+      transition: opacity 0.2s, translate 0.2s, display 0.2s allow-discrete,
+        overlay 0.2s allow-discrete;
+    }
+
+    &:open::picker(select) {
+      opacity: 1;
+      translate: 0 0;
+
+      // Entry needs its own from-state: the picker was display: none,
+      // where the base values above were never painted.
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25em;
+      }
+    }
+
+    option {
+      padding: 0.35em 0.7em;
+      border-radius: 0.3em;
+
+      // Stated rather than inherited: the option's inheritance parent is
+      // the SELECT, whose currentcolor is the page's text — on a
+      // dark-designed baseline that is light words on a light Canvas.
+      color: CanvasText;
+      transition: background-color 0.15s;
+
+      // The UA draws its focus ring inside the card, over our checked fill —
+      // two chromes on one row. The quiet hover fill takes over as the
+      // keyboard's position marker (the checked row already has its mark).
+      &:focus-visible {
+        outline: none;
+      }
+
+      // Hover never repaints what is already chosen.
+      &:not(:checked):is(:hover, :focus-visible) {
+        background-color: color-mix(in srgb, currentcolor 8%, transparent);
+      }
+
+      // The same mark as the knob and the pinned Separate button, through
+      // the same custom property, so the Indicator control reaches it here.
+      &:checked {
+        background-color: var(--arts-cs-toggle-active, color-mix(in srgb, currentcolor 22%, transparent));
+      }
+
+      // The row's fill is the mark; the UA checkmark would indent the
+      // chosen row's text out of line with its neighbours.
+      &::checkmark {
+        display: none;
+      }
+    }
+  }
+}

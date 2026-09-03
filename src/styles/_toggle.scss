@@ -1,0 +1,87 @@
+// Every skin ships every state's icon and CSS decides which is visible, so a
+// swap costs no JS and cannot lag the theme it describes — and, because the
+// head script stamps both `<html>` attributes before first paint, a cached
+// page never shows one visitor's control in another visitor's state.
+//
+// What "active" means differs by skin. Anything that can express "follow the
+// system" tracks the stored PREFERENCE, because `system` on a light OS and an
+// explicit Default resolve to the same colors and keying off the theme would
+// make them identical — so the Buttons skin reads it in both modes, "nothing
+// pinned" included. Only the Icon skin's two-state mode tracks the THEME,
+// which two states leave unambiguous; the Switch rides the scalar instead
+// (_switch.scss), so it can follow a scrub.
+
+.arts-cs-toggle.arts-cs-toggle {
+  // The segmented geometry, declared here rather than on the track, because
+  // custom properties inherit and the track is not always this element: the
+  // Joined root IS its own track, the Switch's is a child. Re-declaring them
+  // down there is what made the Spacing control dead on the Switch — the
+  // track overrode the value before it could arrive.
+  --arts-cs-seg-gap: 0px;
+  --arts-cs-seg-pad: 0.25em;
+  --arts-cs-seg-count: 2;
+  --arts-cs-seg-index: 0;
+
+  // WebKit counts registered custom properties as part of `transition: all`,
+  // which the spec excludes — and Elementor sets `all` on its widget wrappers,
+  // which this root inherits the match for. The root then re-animates its own
+  // inherited copy of --arts-cs-p over a SECOND duration, so anything reading
+  // the scalar below compounds two easings: measured, the Switch knob landed
+  // ~300ms after the colours had settled, which reads as the knob being glued.
+  // Naming the properties keeps the scalar a pass-through value here. Chromium
+  // never had the bug; only the root needs this, since every descendant that
+  // transitions at all already names its properties.
+  transition-property: color, background-color, border-color;
+
+  // Zero while the options sit flush, effectively infinite once any spacing
+  // exists — so `min(value, flush)` states "only when flush" as arithmetic,
+  // in every browser, with no style query. Derived here on the root, where
+  // the Spacing control also lands, so the override reaches the calc().
+  --arts-cs-seg-flush: calc(var(--arts-cs-seg-gap) * 9999);
+
+  // How long a hover takes to arrive. Zeroed during the palette morph below:
+  // the morph animates these same properties through `currentcolor`, and a
+  // transition on top of that lags behind the text it should move with — the
+  // trap the `.e-con` background rule in _state.scss already records.
+  --arts-cs-toggle-fade: 0.25s;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+
+  // An inline-level box sits on the text baseline, so the line box reserves
+  // descender space under it — 6px of "padding" nobody set, under a widget
+  // whose controls are all zero. `middle` is the right default for the
+  // shortcode, which is meant to sit inline beside menu or footer text.
+  vertical-align: middle;
+
+  .arts-cs-toggle__icon {
+    display: inline-flex;
+  }
+}
+
+.arts-cs-toggle__track,
+.arts-cs-toggle__select,
+.arts-cs-toggle__option,
+.arts-cs-toggle__icon,
+.arts-cs-toggle__label {
+  transition: color var(--arts-cs-toggle-fade), background-color var(--arts-cs-toggle-fade),
+    border-color var(--arts-cs-toggle-fade);
+}
+
+// The mark's travel and its fade are the morph's own business, so they keep
+// their durations; only the colours stand still while it runs.
+html.arts-cs-morphing .arts-cs-toggle {
+  --arts-cs-toggle-fade: 0s;
+}
+
+// The widget renders the toggle alone in its container, where there is no
+// text for it to align with and the container's strut is pure leftover
+// height. A flex container has no line boxes, so no strut — where zeroing
+// line-height did the same job by bleeding a 0 into every skin that renders
+// text, which the base-select dropdown face actually honours (a legacy
+// select enforces its own). Scoped to our own widget: a shortcode dropped
+// into someone's menu keeps their layout, which is theirs to control.
+.elementor-widget-arts-color-switcher-toggle > .elementor-widget-container {
+  display: flex;
+}

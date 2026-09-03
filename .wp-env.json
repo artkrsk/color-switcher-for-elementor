@@ -1,0 +1,14 @@
+{
+	"core": "https://wordpress.org/wordpress-7.0.1.zip",
+	"phpVersion": "8.3",
+	"port": 8894,
+	"testsPort": 8895,
+	"plugins": [
+		"https://downloads.wordpress.org/plugin/elementor.zip",
+		"https://downloads.wordpress.org/plugin/horizontal-scroll-for-elementor.zip",
+		"./dist/color-switcher-for-elementor"
+	],
+	"mappings": {
+		"test-workspace": "."
+	}
+}

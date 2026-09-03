@@ -1,0 +1,44 @@
+// Scroll-bound tier 1: pure CSS scrubbing, zero JS at runtime. The runtime
+// names the view-timeline on the marked section itself — the name has to be
+// unique in scope, so the stylesheet cannot declare it for every zone;
+// timeline-scope lets body — the section's ancestor — consume it. The runtime
+// also adds the class and the inline animation-range spanning the zone's
+// Viewport handles, and only when native support is detected and the page has
+// one scroll zone; otherwise the JS tier drives the same scalar via WAAPI.
+// The probe tests the NAMED syntax + range together — partial implementations
+// misreport on looser checks (family-proven gate).
+@supports (view-timeline: --probe block) and (animation-timeline: --probe) and
+  (animation-range: contain 0% contain 100%) {
+  html.arts-cs-scroll-native {
+    timeline-scope: --arts-cs-zone;
+
+    body {
+      animation: arts-cs-scrub linear both;
+      animation-timeline: --arts-cs-zone;
+    }
+
+    &.arts-cs-scroll-reverse body {
+      animation-name: arts-cs-scrub-reverse;
+    }
+  }
+}
+
+@keyframes arts-cs-scrub {
+  from {
+    --arts-cs-p: 0;
+  }
+
+  to {
+    --arts-cs-p: 1;
+  }
+}
+
+@keyframes arts-cs-scrub-reverse {
+  from {
+    --arts-cs-p: 1;
+  }
+
+  to {
+    --arts-cs-p: 0;
+  }
+}

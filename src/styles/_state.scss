@@ -1,0 +1,60 @@
+// The scalar/state layer.
+//
+// The whole system is driven by one registered scalar: 0 = Default, 1 = Alt.
+// The state attribute lives on <html> (server-rendered, AJAX-synced); the
+// scalar and everything value-side live on body, where the kit-scoped
+// duration/easing variables are visible.
+@property --arts-cs-p {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+html[data-arts-cs='alt'] body {
+  --arts-cs-p: 1;
+}
+
+// Our own admin-bar metric, keyed to the body class WordPress prints only
+// when the bar is actually on the page — the raw var is unreliable, since the
+// Elementor editor preview exposes it while never rendering a bar. Under the
+// class it mirrors WordPress's own value (32px, 46px below 782px), except
+// under 600px where core switches the bar to position: absolute and it
+// scrolls away, so viewport-pinned measurements must not reserve room for it.
+body {
+  --arts-cs-admin-bar: 0px;
+
+  transition: --arts-cs-p var(--arts-cs-duration, 0.4s) var(--arts-cs-ease, ease);
+}
+
+body.admin-bar {
+  --arts-cs-admin-bar: var(--wp-admin--admin-bar--height, 0px);
+
+  @media screen and (max-width: 600px) {
+    --arts-cs-admin-bar: 0px;
+  }
+}
+
+// Native chrome — form controls, date pickers, scrollbars, the canvas behind
+// the page — follows the theme only if the browser is told the page has one.
+// Declared on <html> so it lands before anything else can paint.
+html[data-arts-cs='alt'] {
+  color-scheme: dark;
+}
+
+// An attribute-driven dark mode gets none of the incidental protection a
+// prefers-color-scheme one receives when browsers strip backgrounds for
+// print: light text on stripped white prints invisible.
+@media print {
+  body {
+    --arts-cs-p: 0;
+  }
+}
+
+// During a coordinator-driven morph, keep Elementor's stock container
+// background transition from chasing the animating variable (adds ~.3s lag
+// behind text). Mirrors core's .e-con transition list with background zeroed;
+// active only for the morph window, so background/hover effects behave stock
+// at rest.
+html.arts-cs-morphing .e-con {
+  transition: background 0s, border 0.3s, box-shadow 0.3s, transform 0.4s;
+}

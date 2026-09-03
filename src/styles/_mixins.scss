@@ -1,0 +1,24 @@
+// Compile-time only — nothing here emits CSS on its own.
+
+// Themes style bare <button> aggressively — Hello Elementor's reset paints
+// them #c36 with a filled hover — and a type+pseudo selector like
+// `button:hover` (0,1,1) outranks a single class (0,1,0). Doubling the class
+// wins those fights from the stylesheet alone, without leaning on markup or
+// importance; the widget's own style controls still outrank this through
+// their wrapper class.
+@mixin bare-button {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  // The reset has to hold in the states themes actually restyle.
+  &:hover,
+  &:focus {
+    background: none;
+    color: inherit;
+  }
+}

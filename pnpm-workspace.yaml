@@ -1,0 +1,22 @@
+# wp-env pins the pre-0.6 adm-zip (GHSA-xcpc-8h2w-3j85, a 4GB-allocation DoS on
+# a crafted archive); it only unzips the trusted core/plugin archives here, but
+# the patched line is API-compatible.
+overrides:
+  adm-zip: ^0.6.0
+
+allowBuilds:
+  # sass pulls @parcel/watcher for its own CLI --watch, which this build never uses
+  '@parcel/watcher': false
+  esbuild: true
+  # @wordpress/env pulls this native module (via @wp-playground/cli →
+  # @php-wasm/node). It ships prebuilts for every platform we run, and its
+  # install script only re-require()s the binary it already shipped — the
+  # runtime loader reads binaries/ directly regardless. Allowing it would only
+  # matter on a platform miss, where it shells out to node-gyp.
+  fs-ext-extra-prebuilt: false
+  # lefthook's binary rides its optionalDependencies, not this script — all the
+  # postinstall does is write .git/hooks, which package.json#prepare does explicitly.
+  lefthook: false
+
+minimumReleaseAgeExclude:
+  - '@artemsemkin/elementor-types@2.0.0'

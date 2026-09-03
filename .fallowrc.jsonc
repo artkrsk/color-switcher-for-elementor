@@ -1,0 +1,28 @@
+{
+  // Codebase-health instrument (advisory in CI; knip is the hard gate).
+  "entry": [
+    "src/ts/boot.ts",
+    "src/ts/editor/index.ts",
+    // Real runtime root, declared as the sass entry in project.config.js —
+    // a manifest fallow does not read.
+    "src/styles/index.scss",
+    "project.config.js"
+  ],
+  // Called reflectively by Elementor: the handler methods off its own
+  // lifecycle, the hook methods off $e's registry.
+  "usedClassMembers": [
+    "onInit",
+    "onDestroy",
+    "onElementChange",
+    "getCommand",
+    "getId",
+    "getConditions",
+    "apply"
+  ],
+  // Used through `pnpm exec wp-env` (see CLAUDE.md); knip ignores it too.
+  "ignoreDependencies": ["@wordpress/env"],
+  "ignorePatterns": ["dist/**", "vendor/**", "vendor-prefixed/**", "src/php/**", "docs/**"],
+  "ignoreExportsUsedInFile": true,
+  "duplicates": { "minOccurrences": 3 },
+  "health": { "ignore": ["**/*.test.ts", "tests/e2e/**"] }
+}

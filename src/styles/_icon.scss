@@ -1,0 +1,43 @@
+@use 'mixins';
+
+.arts-cs-toggle_icon.arts-cs-toggle_icon {
+  @include mixins.bare-button;
+}
+
+// Icon skin, two states: the palette on screen is unambiguous, so the icon
+// simply names it.
+.arts-cs-toggle_icon[data-arts-cs-mode='binary'] .arts-cs-toggle__icon_alt {
+  display: none;
+}
+
+html[data-arts-cs='alt'] .arts-cs-toggle_icon[data-arts-cs-mode='binary'] {
+  .arts-cs-toggle__icon_default {
+    display: none;
+  }
+
+  .arts-cs-toggle__icon_alt {
+    display: inline-flex;
+  }
+}
+
+// Icon skin, three states: the icon shows the state the visitor is IN. The
+// unstamped case is a visitor who has chosen nothing, which is what `system`
+// means before it is stored.
+.arts-cs-toggle_icon[data-arts-cs-mode='cycle'] .arts-cs-toggle__icon {
+  display: none;
+}
+
+html:not([data-arts-cs-pref])
+  .arts-cs-toggle_icon[data-arts-cs-mode='cycle']
+  .arts-cs-toggle__icon_system,
+html[data-arts-cs-pref='system']
+  .arts-cs-toggle_icon[data-arts-cs-mode='cycle']
+  .arts-cs-toggle__icon_system,
+html[data-arts-cs-pref='default']
+  .arts-cs-toggle_icon[data-arts-cs-mode='cycle']
+  .arts-cs-toggle__icon_default,
+html[data-arts-cs-pref='alt']
+  .arts-cs-toggle_icon[data-arts-cs-mode='cycle']
+  .arts-cs-toggle__icon_alt {
+  display: inline-flex;
+}
