@@ -42,8 +42,9 @@ class Documents extends BaseManager {
 	const THEME_DEFAULT = 'default';
 
 	/**
-	 * "Page theme" — the baseline zones return to; what dark-start pages use.
-	 * Label symmetry with the element-level control is deliberate.
+	 * The page's own baseline: what zones return to, and what a dark-start page
+	 * sets. Registered into a section sharing the element-level one's id and
+	 * label, so an author finds the same panel name in both places.
 	 *
 	 * @param Document $document The document whose controls are being registered.
 	 */

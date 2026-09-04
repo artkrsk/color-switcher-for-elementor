@@ -3,9 +3,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 /**
- * Seeds the site the specs run against with dev/seed/demo-page.php — the same
- * fixture the wp.org Live Preview blueprint inlines, so a page that stops
- * rendering breaks the suite and the shop window on one signal.
+ * Seeds the site the specs run against — one fixture per journey, each keyed
+ * to the slug its spec navigates to.
  *
  * No login: every spec is a frontend visitor.
  */
@@ -15,8 +14,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const SEED = '/var/www/html/test-workspace/dev/seed/demo-page.php'
 
 /**
- * The cross-plugin page, kept out of demo-page.php because that fixture is
- * also the wp.org blueprint's, which ships this plugin alone.
+ * The cross-plugin page, kept out of demo-page.php because it needs Arts
+ * Horizontal Scroll installed alongside.
  */
 const HORIZONTAL_SEED = '/var/www/html/test-workspace/dev/seed/horizontal-page.php'
 

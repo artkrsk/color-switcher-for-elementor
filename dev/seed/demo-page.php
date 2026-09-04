@@ -1,9 +1,9 @@
 <?php
 /**
- * Demo page fixture — one script, two consumers: the e2e suite seeds the site
- * with it, and the wp.org Playground blueprint inlines it verbatim. A page
- * that stops rendering breaks the suite and the shop-window preview on the
- * same signal.
+ * Demo page fixture — the mechanism the e2e suite pins: element ids, zone
+ * counts and a 50% scrub handle the specs assert on. The wp.org Playground
+ * blueprint inlines preview-page.php instead, so this file stays a harness
+ * and is free to change shape whenever a spec needs it to.
  *
  * Idempotent: re-running replaces the page and re-applies the palette.
  *
@@ -16,8 +16,9 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 
 use Elementor\Plugin as Elementor;
 
-// Single source of truth for the page id: the blueprint's landingPage is
-// generated from this define, so the seeded page and the URL cannot drift.
+// A fixed import_id, so re-seeding always lands the page on the same id
+// rather than the next one free. Nothing outside this file reads it — the
+// specs navigate by slug.
 define( 'ACS_DEMO_PAGE_ID', 9921 );
 
 $acs_kit = Elementor::$instance->kits_manager->get_active_kit();

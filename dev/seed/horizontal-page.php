@@ -2,10 +2,10 @@
 /**
  * Cross-plugin fixture: a marked panel INSIDE an Arts Horizontal Scroll track.
  *
- * Separate from demo-page.php on purpose — that one is also inlined by the
- * wp.org Live Preview blueprint, which ships Color Switcher alone. This page
- * only exists where the horizontal plugin is installed too (the e2e run, and
- * the dev site).
+ * Separate from demo-page.php on purpose — this one needs Arts Horizontal
+ * Scroll, which neither the e2e baseline nor the wp.org Live Preview
+ * blueprint installs. It only exists where that plugin is present too (the
+ * e2e run, and the dev site).
  *
  * A pinned panel's vertical band is frozen while its neighbours slide past, so
  * this is the fixture that proves zone state follows what is actually on

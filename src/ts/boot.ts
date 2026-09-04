@@ -99,7 +99,10 @@ const registerHooks = (): void => {
   // preview Elementor boots its frontend before this footer script runs, so
   // every existing element had its ready trigger fired with no hook of ours
   // registered — the zones would stay dead until something re-rendered them.
-  // addHandler fingerprints by element, so re-attaching is a no-op.
+  // addHandler keys on the element AND the handler class name, so a repeat
+  // destroys the previous instance before constructing a fresh one. Our
+  // onDestroy() unregisters and onInit() registers again, so the end state is
+  // the same — but it is a real re-attach, not a skipped call.
   for (const element of document.querySelectorAll<HTMLElement>(ZONE_SELECTOR)) {
     attach(jQuery(element))
   }

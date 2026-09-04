@@ -225,10 +225,11 @@ export const registerAltMediaView = (): void => {
     }
 
     /**
-     * The whole `.elementor-control-media__content` is the parent's own
-     * frame opener (`click @ui.frameOpeners`), and our buttons sit inside it —
-     * so without this a press opened the stock picker underneath ours, two
-     * media modals deep.
+     * The parent binds `click @ui.frameOpeners` to
+     * `.elementor-control-preview-area` — the same div that also carries
+     * `elementor-control-media__content` — and our buttons sit inside it, so
+     * without this a press opened the stock picker underneath ours, two media
+     * modals deep.
      */
     private claim(event: Event): void {
       event.preventDefault()
