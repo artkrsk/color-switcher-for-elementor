@@ -189,7 +189,10 @@ class ScrollDriver {
       return null
     }
 
-    const timeline = window.ARTS_HS?.getTimeline?.(zone.element) ?? null
+    // 1.4.x of their plugin published the surface as ARTS_HS; sites update
+    // the two plugins independently, so read either name.
+    const hs = window.artsHorizontalScroll ?? window.ARTS_HS
+    const timeline = hs?.getTimeline?.(zone.element) ?? null
     const wrapper = track.closest<HTMLElement>(HS_WRAPPER_SELECTOR)
 
     if (!timeline && wrapper && !this.awaitingBoot.has(wrapper)) {

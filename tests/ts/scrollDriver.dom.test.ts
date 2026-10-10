@@ -107,7 +107,7 @@ describe('scroll driver', () => {
   it('rides the horizontal timeline for a zone inside a pinned track', () => {
     const options = captureAnimate()
     const timeline = {} as AnimationTimeline
-    vi.stubGlobal('ARTS_HS', { contract: 1, getTimeline: () => timeline })
+    vi.stubGlobal('artsHorizontalScroll', { contract: 1, getTimeline: () => timeline })
 
     scrollDriver.sync(horizontalZone(0.5), 'default', 'alt')
 
@@ -121,9 +121,22 @@ describe('scroll driver', () => {
     expect(document.documentElement.classList.contains(CLASS_SCROLL_NATIVE)).toBe(false)
   })
 
+  it('still finds the timeline under the name Horizontal Scroll 1.4.x published', () => {
+    const options = captureAnimate()
+    const timeline = {} as AnimationTimeline
+    vi.stubGlobal('ARTS_HS', { contract: 1, getTimeline: () => timeline })
+
+    scrollDriver.sync(horizontalZone(0.5), 'default', 'alt')
+
+    expect(options[0]).toMatchObject({ timeline })
+  })
+
   it('spans the whole panel window when the distance covers a viewport', () => {
     const options = captureAnimate()
-    vi.stubGlobal('ARTS_HS', { contract: 1, getTimeline: () => ({}) as AnimationTimeline })
+    vi.stubGlobal('artsHorizontalScroll', {
+      contract: 1,
+      getTimeline: () => ({}) as AnimationTimeline
+    })
 
     scrollDriver.sync(horizontalZone(1), 'default', 'alt')
 
@@ -145,7 +158,10 @@ describe('scroll driver', () => {
     vi.spyOn(wrapper, 'getBoundingClientRect').mockImplementation(
       () => ({ height: 1000, top: 0 }) as DOMRect
     )
-    vi.stubGlobal('ARTS_HS', { contract: 1, getTimeline: () => ({}) as AnimationTimeline })
+    vi.stubGlobal('artsHorizontalScroll', {
+      contract: 1,
+      getTimeline: () => ({}) as AnimationTimeline
+    })
 
     scrollDriver.sync({ element: wrapper, triggerPoint: 1, distance: 0.25 }, 'default', 'alt')
 
@@ -168,7 +184,10 @@ describe('scroll driver', () => {
     vi.spyOn(panel, 'getBoundingClientRect').mockImplementation(
       () => ({ height: 1000, top: 0 }) as DOMRect
     )
-    vi.stubGlobal('ARTS_HS', { contract: 1, getTimeline: () => ({}) as AnimationTimeline })
+    vi.stubGlobal('artsHorizontalScroll', {
+      contract: 1,
+      getTimeline: () => ({}) as AnimationTimeline
+    })
 
     scrollDriver.sync({ element: panel, triggerPoint: 1, distance: 0.25 }, 'default', 'alt')
 

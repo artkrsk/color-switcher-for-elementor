@@ -1,6 +1,7 @@
 // Arts Horizontal Scroll integration. These names are that plugin's committed
-// public surface (its README's "Integration contract", `window.ARTS_HS.contract`
-// === 1) — a bump there is a review trigger here. Everything is feature-detected:
+// public surface (its README's "Integration contract",
+// `window.artsHorizontalScroll.contract` === 1, `window.ARTS_HS` in 1.4.x) — a
+// bump there is a review trigger here. Everything is feature-detected:
 // on a page without the plugin the branch never runs.
 
 /** Wrapper the horizontal engine pins; also the view-timeline's subject. */

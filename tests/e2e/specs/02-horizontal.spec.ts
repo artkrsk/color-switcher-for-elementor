@@ -73,7 +73,9 @@ const knobProgress = async (page: import('@playwright/test').Page): Promise<numb
 
 test.beforeEach(async ({ page }) => {
   await page.goto(DEMO)
-  await page.waitForFunction(() => !!window.ArtsColorSwitcher && !!window.ARTS_HS)
+  await page.waitForFunction(
+    () => !!window.ArtsColorSwitcher && !!(window.artsHorizontalScroll ?? window.ARTS_HS)
+  )
   // The horizontal engine measures on boot; its track has to be pinned before
   // any of this means anything.
   await page.waitForFunction(() => {

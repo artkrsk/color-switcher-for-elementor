@@ -22,10 +22,12 @@ declare global {
      * that plugin is active; `getTimeline` returns the pinned section's
      * timeline — native or polyfilled — or null outside a booted section.
      */
-    ARTS_HS?: {
+    artsHorizontalScroll?: {
       contract?: number
       getTimeline?: (el: Element) => AnimationTimeline | null
     }
+    /** The same surface under the name Arts Horizontal Scroll 1.4.x published. */
+    ARTS_HS?: Window['artsHorizontalScroll']
     elementorFrontend?: ElementorFrontend
     elementorModules?: ElementorModules
   }
