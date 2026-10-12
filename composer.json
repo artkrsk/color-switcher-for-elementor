@@ -53,7 +53,7 @@
     "arts/elementor-stubs": "^4.0",
     "arts/wp-plugin-standards": "^1.0",
     "brianhenryie/strauss": "^0.31",
-    "doctrine/instantiator": "^1.5",
+    "doctrine/instantiator": "^2.0",
     "phpunit/phpunit": "^9.6",
     "wp-phpunit/wp-phpunit": "~7.1.0",
     "yoast/phpunit-polyfills": "^4.0",
