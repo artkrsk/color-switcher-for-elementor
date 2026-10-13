@@ -3,7 +3,7 @@
  * Plugin Name: Arts Color Switcher for Elementor – Dark Mode & Color Switching on Scroll
  * Plugin URI: https://artemsemkin.com/plugins/color-switcher-for-elementor/
  * Description: Scroll-triggered color theme switching for Elementor — give Global Colors an Alt value and morph the whole page palette between sections.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Artem Semkin
  * Author URI: https://artemsemkin.com
  * License: GPLv3
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ARTS_COLOR_SWITCHER_PLUGIN_VERSION', '1.0.0' );
+define( 'ARTS_COLOR_SWITCHER_PLUGIN_VERSION', '1.0.1' );
 
 require_once __DIR__ . '/vendor/autoload.php';
 
