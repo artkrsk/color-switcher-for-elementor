@@ -26,8 +26,7 @@ const ZONE_SELECTOR =
 const TOGGLE_SELECTOR = '.js-arts-cs-toggle'
 
 /** Elementor suffixes `data-widget_type` with the skin, and fires the ready
- * hook under that name — so a skinned widget needs one registration each.
- * `default` covers a widget saved before it had skins. */
+ * hook under that name — so a skinned widget needs one registration each. */
 const TOGGLE_WIDGET = 'arts-color-switcher-toggle'
 
 /**
@@ -49,8 +48,8 @@ const registerHooks = (): void => {
    * Outside the editor `data-settings` IS what a handler would read anyway —
    * Elementor's frontend Base resolves settings through
    * `$element.data('settings')` — so one regex here spares a whole handler,
-   * its two listeners and a resolve pass for every container that can never
-   * be a zone. addHandler always constructs, so gating has to happen here.
+   * its two listeners and a per-resize unregister for every container that can
+   * never be a zone. addHandler always constructs, so gating has to happen here.
    *
    * Never in the editor: that attribute is written once by PHP at render time
    * and by nothing else in Elementor — no editor code path refreshes it — so

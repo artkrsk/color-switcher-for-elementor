@@ -37,7 +37,7 @@ const themeOf = (preference: TPreference): TTheme => {
   return 'alt' === preference ? 'alt' : 'default'
 }
 
-/** The only place the three stored values are spelled out. */
+/** The only validator for the three stored values. */
 export const isPreference = (value: string | null | undefined): value is TPreference =>
   'system' === value || 'default' === value || 'alt' === value
 
@@ -88,10 +88,10 @@ export const clear = (): void => {
  * defers to the device and any other page keeps what the server rendered.
  *
  * The server reads neither the cookie nor the device — that is what keeps a
- * visitor's theme out of a shared page cache — so this is the only place the
- * visitor layer is applied. The pre-paint head script implements this same
- * table in `Assets::print_head_script()`; the two MUST agree, or the page
- * changes theme between first paint and boot.
+ * visitor's theme out of a shared page cache — so the visitor layer is applied
+ * in the browser only. This is the bundle's half; the pre-paint head script
+ * implements this same table in `Assets::print_head_script()`, and the two
+ * MUST agree, or the page changes theme between first paint and boot.
  *
  * @param rendered What the server put on the page.
  * @param auto     Whether the author left this page to the visitor's device.

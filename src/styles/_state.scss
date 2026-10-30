@@ -2,8 +2,8 @@
 //
 // The whole system is driven by one registered scalar: 0 = Default, 1 = Alt.
 // The state attribute lives on <html> (server-rendered, AJAX-synced); the
-// scalar and everything value-side live on body, where the kit-scoped
-// duration/easing variables are visible.
+// scalar and everything value-side live on body, where the morph timing vars
+// (--arts-cs-duration, --arts-cs-ease) are set and read.
 @property --arts-cs-p {
   syntax: '<number>';
   inherits: true;

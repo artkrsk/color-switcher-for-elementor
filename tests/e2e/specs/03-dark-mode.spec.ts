@@ -394,12 +394,13 @@ test.describe('system preference', () => {
 /**
  * The half of the precedence table a light-scheme browser can never reach.
  *
- * Everything above runs under Playwright's default light scheme, where an
- * unpinned page resolves to the default palette and so looks identical to the
- * pre-1.0 rule where the author's baseline won outright. Only a dark device
- * tells the two apart — and only a real browser proves the pre-paint script
- * and the boot-time resolver agree, since they are written in different
- * languages against different inputs and nothing imports across that gap.
+ * Everything above except the system-preference block runs under Playwright's
+ * default light scheme, where an unpinned page resolves to the default palette
+ * and so looks identical to the pre-1.0 rule where the author's baseline won
+ * outright. Only a dark device tells the two apart — and only a real browser
+ * proves the pre-paint script and the boot-time resolver agree on the device's
+ * actual setting, where headScriptParity.dom.test.ts covers the whole matrix
+ * against a stubbed matchMedia.
  */
 test.describe('a visitor whose device asks for dark', () => {
   test.use({ colorScheme: 'dark' })

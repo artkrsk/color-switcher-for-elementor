@@ -10,9 +10,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
  * event payloads, baseline reading, teardown. contractParity.test.ts holds
  * README's table to the names; this file holds the names to behavior.
  *
- * happy-dom ships no IntersectionObserver, and the coordinator now resolves
- * from one — so the stub records what it was built with and lets a test push
- * intersections, which is exactly the surface the browser provides.
+ * The coordinator resolves from an IntersectionObserver, so the stub records
+ * what it was built with and lets a test push intersections, which is exactly
+ * the surface the browser provides.
  */
 
 interface IFakeObserver {

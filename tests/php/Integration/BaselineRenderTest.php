@@ -42,10 +42,10 @@ class BaselineRenderTest extends TestCase {
 	}
 
 	/**
-	 * An Auto page renders nothing, but for a different reason than it used to:
-	 * the server is blind to the visitor's device on purpose, because this
-	 * output is cacheable and one visitor's device must not decide everyone's
-	 * palette. The head script resolves it before paint instead.
+	 * An Auto page renders nothing because the server is blind to the visitor's
+	 * device on purpose: this output is cacheable, and one visitor's device must
+	 * not decide everyone's palette. The head script resolves it before paint
+	 * instead.
 	 */
 	public function test_auto_baseline_renders_nothing(): void {
 		$output = $this->language_attributes_for( $this->page_with_theme( Documents::THEME_AUTO ) );

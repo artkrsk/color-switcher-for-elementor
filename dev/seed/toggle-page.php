@@ -2,9 +2,9 @@
 /**
  * A page carrying the toggle, seeded for the dark-mode e2e journey.
  *
- * Deliberately renders the SHORTCODE rather than the widget: it exercises the
- * path that has no Elementor element_ready hook behind it, which is the one
- * that would break silently if boot's catch-up scan regressed.
+ * Renders the SHORTCODE as well as the widget skins: the shortcode path has
+ * no Elementor element_ready hook behind it, so it is the one that would
+ * break silently if boot's catch-up scan regressed.
  *
  * Idempotent. Run: wp eval-file dev/seed/toggle-page.php --user=1
  */

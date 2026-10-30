@@ -58,9 +58,9 @@ export const createZoneHandler = (): unknown => {
     }
 
     /**
-     * Fires for behavior controls; ours are style-only as far as Elementor is
-     * concerned, so the editor bundle's explicit sync event is what actually
-     * reaches us. Kept because it costs nothing and covers the other case.
+     * Elementor's own change notification. The editor bundle's explicit sync
+     * event is the other way in; kept because it costs nothing and covers the
+     * case where this one does not fire.
      */
     onElementChange(setting: string): void {
       if (setting.startsWith('arts_cs_')) {
@@ -131,7 +131,7 @@ export const createZoneHandler = (): unknown => {
       const start = clamp(value?.sizes?.start, 100)
       const end = clamp(value?.sizes?.end, 100)
 
-      // A range control can hand the handles over in either order.
+      // Normalised so `start` is always the lower handle.
       return { start: Math.min(start, end), end: Math.max(start, end) }
     }
   }

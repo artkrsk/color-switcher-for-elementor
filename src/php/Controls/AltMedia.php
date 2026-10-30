@@ -127,11 +127,11 @@ class AltMedia extends Control_Media {
 	 * the view that prints them.
 	 *
 	 * The view injects its button into the stock control's own tools row —
-	 * the same row and the same markup Elementor's dynamic-tags switcher fills
-	 * in — rather than appending a second control field, which is what the Alt
-	 * picker is: part of this control, not one beside it. That leaves the
-	 * labels on the JS side, and this plugin ships no script translations, so
-	 * they travel as args and stay on the normal .po path.
+	 * the same row Elementor's dynamic-tags switcher fills in — rather than
+	 * appending a second control field, which is what the Alt picker is: part
+	 * of this control, not one beside it. That leaves the labels on the JS
+	 * side, and this plugin ships no script translations, so they travel as
+	 * args and stay on the normal .po path.
 	 *
 	 * @return array<string, mixed>
 	 */

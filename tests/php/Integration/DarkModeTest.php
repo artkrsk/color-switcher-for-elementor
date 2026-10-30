@@ -466,9 +466,8 @@ class DarkModeTest extends TestCase {
 	}
 
 	/**
-	 * A tab and a section carry no selectors, so under Optimized Control
-	 * Loading they are filed as style controls and `get_controls()` never
-	 * returns them. The editor's conditions are the ones that matter here.
+	 * Rebuilds the widget's control stack with `Performance::$is_frontend`
+	 * forced off.
 	 *
 	 * @return array<string, mixed>
 	 */

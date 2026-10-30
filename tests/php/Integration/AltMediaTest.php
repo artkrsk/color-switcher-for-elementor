@@ -325,7 +325,7 @@ class AltMediaTest extends TestCase {
 	 */
 	private function generated_css( array $image ): string {
 		// Document::save() gates on edit capability — a logged-out request
-		// silently no-ops, which would make this pass for the wrong reason.
+		// silently no-ops and leaves no stylesheet to assert on.
 		wp_set_current_user( $this->factory()->user->create( array( 'role' => 'administrator' ) ) );
 
 		$post_id  = $this->factory()->post->create( array( 'post_type' => 'page' ) );

@@ -123,7 +123,7 @@ test('a marked section turns the whole page and restores on the way out', async 
 
 /**
  * The demo's scroll-bound section keeps its handles apart (lower at 50%), so
- * the change follows scroll across the lower half of the screen instead of
+ * the change follows scroll across the upper half of the screen instead of
  * happening at a line. The section before it is unmarked, so the scrub starts
  * from the page baseline and runs Default → Alt.
  */

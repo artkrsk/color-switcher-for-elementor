@@ -6,8 +6,8 @@ use Arts\ColorSwitcher\Managers\Kit;
 use Elementor\Controls_Manager;
 
 /**
- * The injection into Elementor's own Global Colors repeaters — the one place
- * the plugin rewrites core's controls rather than adding its own.
+ * The injection into Elementor's own Global Colors repeaters, where the plugin
+ * rewrites core's controls instead of adding its own.
  */
 class KitControlsTest extends TestCase {
 

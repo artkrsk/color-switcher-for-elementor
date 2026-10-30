@@ -177,9 +177,9 @@ class Coordinator {
   }
 
   /**
-   * The trigger line, as a root collapsed to a 1px strip — across the
-   * viewport's height normally, across its WIDTH for a section pinned inside
-   * a horizontally scrolling track.
+   * The trigger line, as a root collapsed to a 1px strip — a row at the line
+   * normally, a column at it for a section pinned inside a horizontally
+   * scrolling track.
    *
    * The rotation is what keeps the control honest there. A pinned panel spans
    * the whole track height for its entire traversal, so a horizontal line is
@@ -254,11 +254,11 @@ class Coordinator {
   }
 
   /**
-   * Only a resize is listened for, and only to rebuild. rootMargin is
-   * absolute px and immutable, so it goes stale when the line moves OR when
-   * the viewport height changes — the bottom inset is measured from it.
-   * Scroll is not listened for at all; that is the point of driving
-   * resolution from observers.
+   * Only a resize (or the horizontal engine booting, below) is listened for,
+   * and only to rebuild. rootMargin is absolute px and immutable, so it goes
+   * stale when the line moves OR when the viewport height changes — the
+   * bottom inset is measured from it. Scroll is not listened for at all; that
+   * is the point of driving resolution from observers.
    */
   private listen(): void {
     if (this.listening) {

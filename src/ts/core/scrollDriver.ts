@@ -24,9 +24,10 @@ const SUPPORTS_NATIVE =
   CSS.supports('timeline-scope: --probe')
 
 /**
- * Drives the ONE scroll-bound zone a page may have (v1 constraint: every
- * tier holds its edge values via `fill: both`, which only composes for a
- * single animation; extra scroll zones are inert and documented as such).
+ * Drives one scroll-bound zone at a time: whichever the coordinator says
+ * owns the scalar. Overlapping scroll zones take turns (the later one in the
+ * page wins) instead of composing, because every tier holds its edge values
+ * via `fill: both`, which only composes for a single animation.
  *
  * Three tiers, in the order `install()` tries them. Arts Horizontal Scroll's
  * published timeline first, because it is the only one that can describe a

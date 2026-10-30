@@ -77,8 +77,7 @@ class Assets extends BaseManager {
 	 * Printed raw rather than through `wp_add_inline_script()`: a src-less
 	 * handle is the tidier idiom, but it puts this in the script queue where
 	 * an optimizer can aggregate or defer it, and a deferred pre-paint script
-	 * is precisely the flash it exists to prevent. The two attributes ask the
-	 * common optimizers to leave it alone for the same reason.
+	 * is precisely the flash it exists to prevent.
 	 *
 	 * Printed only where the feature is configured, so an unconfigured site
 	 * carries no head script. (It only ever READS the cookie; the sole writer

@@ -1,9 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
 /**
- * The browser tier. Everything else in this repo runs in happy-dom, which has
- * no layout and no scroll — so the two things the plugin exists to do, the
- * zone switch and the scrub, were the only parts nothing executed.
+ * The browser tier. The unit tests run in node or happy-dom, which have no
+ * layout and no scroll — so the two things the plugin exists to do, the zone
+ * switch and the scrub, are only ever executed here.
  *
  * Runs against the same wp-env the PHPUnit suite uses, on the DEV port: the
  * tests port belongs to WordPress's own test bootstrap.

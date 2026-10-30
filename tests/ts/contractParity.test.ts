@@ -10,7 +10,8 @@ import { describe, expect, it } from 'vitest'
  * not advertise, but nothing advertised may be missing or renamed.
  */
 const README = readFileSync('README.md', 'utf8')
-// The constants barrel is the module side of the contract.
+// Read as source text, not imported: a surface counts as declared when its
+// quoted literal appears in one of the files that carry the table's names.
 const CONTRACT_TS = ['ATTRIBUTES', 'CLASSES', 'CONTRACT', 'EVENTS', 'PREFERENCE', 'VARIABLES']
   .map((file) => readFileSync(`src/ts/constants/${file}.ts`, 'utf8'))
   .join('\n')

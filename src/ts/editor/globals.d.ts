@@ -2,10 +2,10 @@
  * Editor globals, typed via @artemsemkin/elementor-types.
  *
  * `elementor` and `wp` are only safe once the editor app has booted. This
- * bundle is enqueued with no dependencies — the family idiom, and what every
- * sibling plugin does — so it runs BEFORE that, where reading a bare binding
- * throws a ReferenceError rather than yielding undefined. Those two therefore
- * go through `window.` at module scope, which is a plain property read.
+ * bundle is enqueued with no dependencies (`Assets::enqueue_editor_js`), so it
+ * runs BEFORE that, where reading a bare binding throws a ReferenceError
+ * rather than yielding undefined. Those two therefore go through `window.` at
+ * module scope, which is a plain property read.
  *
  * `$e` is the exception and stays bare on purpose: `elementor-common` (which
  * depends on `elementor-web-cli`, where `window.$e` is assigned) is enqueued

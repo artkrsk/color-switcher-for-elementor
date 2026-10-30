@@ -10,9 +10,9 @@ import { coordinator } from './coordinator'
 import { clear, current, isPreference, read, write } from './preference'
 
 /**
- * The visitor-facing controls. They are the only thing in the plugin that
- * persists anything: everything else changes what is shown without committing
- * it.
+ * The visitor-facing controls. Together with the public `setPreference()`
+ * they are the only things in the plugin that persist anything: everything
+ * else changes what is shown without committing it.
  *
  * Every skin funnels into `apply()`, and none of them resolves a theme — they
  * move the PREFERENCE and let the coordinator re-read the baseline. What each
@@ -154,9 +154,10 @@ const activate = (root: HTMLElement, event: Event): void => {
     return
   }
 
-  // Two states, three positions: pinned, released, pinned the other way.
-  // Releasing hands the page back to its author — where the visitor was
-  // before their first press, which following the OS would not guarantee.
+  // Two states, two presses: the first pins the opposite of the page's own
+  // state, the next releases it. Releasing hands the page back to its author
+  // — where the visitor was before their first press, which following the OS
+  // would not guarantee.
   apply(read() ? null : opposite())
 }
 

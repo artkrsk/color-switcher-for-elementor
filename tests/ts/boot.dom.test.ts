@@ -6,10 +6,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 /**
  * The frontend entry, which is almost entirely wiring: which hooks get
  * registered, and which elements are allowed past the `data-settings` gate
- * before a handler is built for them. None of that was exercised — the only
- * thing reading this file was `phpParity.test.ts`, which greps it as TEXT to
- * check the gate's literals match PHP. That catches a renamed constant and
- * nothing else: the gate could invert and the regex would still match.
+ * before a handler is built for them. `phpParity.test.ts` only greps boot.ts
+ * as TEXT to check the gate's literals match PHP, which catches a renamed
+ * constant and nothing else: the gate could invert and the regex would still
+ * match.
  *
  * What the coordinator then DOES with a zone belongs to `contract.dom.test.ts`,
  * which drives the singleton directly. This file stops at the boundary.

@@ -1,4 +1,4 @@
-// Scroll-bound tier 1: pure CSS scrubbing, zero JS at runtime. The runtime
+// Scroll-bound native tier: pure CSS scrubbing, no JS per frame. The runtime
 // names the view-timeline on the marked section itself — the name has to be
 // unique in scope, so the stylesheet cannot declare it for every zone;
 // timeline-scope lets body — the section's ancestor — consume it. The runtime

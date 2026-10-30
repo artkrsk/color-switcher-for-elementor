@@ -7,9 +7,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 /**
  * The handler is where Elementor's control values become zones, and its
- * settings-reading is all edge cases: sliders arrive as objects, units vary,
- * and the editor changes them under a live handler. Nothing else exercises
- * that translation — the e2e specs only see its outcome.
+ * settings-reading is all edge cases: the range arrives as a nested object
+ * that may be missing, non-numeric or reversed, and the editor changes
+ * settings under a live handler. Nothing else exercises that translation —
+ * the e2e specs only see its outcome.
  */
 
 interface IHandlerInstance {
@@ -205,10 +206,6 @@ describe('zone handler', () => {
     expect(registered[0]).toMatchObject({ triggerPoint: 0.8, distance: 0.6 })
   })
 
-  /**
-   * The editor path: Elementor regenerates CSS for these controls but calls
-   * no handler, so the editor bundle dispatches this event instead.
-   */
   it('re-registers when the editor dispatches a settings sync', () => {
     const element = zoneElement()
     makeHandler(element, { arts_cs_enabled: 'switch' })

@@ -11,8 +11,8 @@
  * and no HTML widget. Every colour is a Global Color, which is not a
  * restriction here but the whole argument: link a colour, and it turns.
  *
- * Idempotent: re-running replaces the page, re-applies the palette, and reuses
- * the SVG attachments rather than accumulating them.
+ * Idempotent: re-running replaces the page, re-applies the palette, and
+ * overwrites the same SVG files in uploads rather than accumulating them.
  *
  * Runs in two contexts:
  *   wp eval-file dev/seed/preview-page.php --user=1     (dev site)
@@ -135,8 +135,8 @@ if ( ! $acspv_kit_id ) {
 	$acspv_kit_id = (int) $acspv_kit->get_main_id();
 }
 
-// Upsert rather than replace: Elementor's own four stock colours are referenced
-// by the theme and by widget defaults, and dropping them breaks unrelated CSS.
+// Upsert rather than replace: custom_colors may already hold Global Colors
+// this palette does not define, and a re-seed must not drop them.
 $acspv_kit_settings = get_post_meta( $acspv_kit_id, '_elementor_page_settings', true );
 $acspv_kit_settings = is_array( $acspv_kit_settings ) ? $acspv_kit_settings : array();
 $acspv_existing     = isset( $acspv_kit_settings['custom_colors'] ) && is_array( $acspv_kit_settings['custom_colors'] )

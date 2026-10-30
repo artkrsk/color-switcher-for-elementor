@@ -20,7 +20,8 @@ import { describe, expect, it } from 'vitest'
  * the same handful of names with no build step between them: PHP registers the
  * controls and renders the attributes, SCSS keys off them, TS reads both.
  * PHPStan is type analysis and cannot see a value drift; the rest of the suite
- * never opens a .php or .scss file.
+ * opens only the PHP holding the head script and the shortcode name, never a
+ * .scss file.
  *
  * Parsed by regex rather than executed — booting WordPress for a dozen strings
  * would cost the suite a PHP runtime.
@@ -142,7 +143,10 @@ describe('PHP ↔ TS ↔ SCSS parity', () => {
     expect(BOOT_TS).toContain('SKINS')
   })
 
-  /** Both states of the two-state control, spelled the same on both sides. */
+  /**
+   * Both modes as the renderer and the stylesheet spell them; TS only tests for
+   * `cycle` and treats everything else as binary.
+   */
   it('mode values match between the renderer and the markup TS reads', () => {
     const toggle = readFileSync('src/ts/core/toggle.ts', 'utf8')
 
@@ -202,8 +206,8 @@ describe('PHP ↔ TS ↔ SCSS parity', () => {
   })
 
   /**
-   * The one string CSS and PHP have to agree on: every alt rule is scoped to
-   * the same state attribute the stylesheet keys off.
+   * Media.php derives each alt image rule itself, so its scope has to be the
+   * same state attribute the stylesheet keys off.
    */
   it('the alt scope uses the state attribute', () => {
     expect(MEDIA_PHP).toContain(`html[${ATTR_STATE}="alt"]`)

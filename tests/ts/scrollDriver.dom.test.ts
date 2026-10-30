@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
  * The scrub's range is the viewport band the control draws: it starts at the
  * lower handle and ends at the upper one. Both tiers have to agree — the
  * native one in real units, the polyfilled one in percentages of the cover
- * span, because the polyfill drops length offsets.
+ * span.
  */
 
 const zone = (overrides: Partial<IZone> = {}): IZone => {
@@ -82,7 +82,7 @@ const horizontalZone = (distance: number, panelStart = '33.333%', panelEnd = '10
   return { element: panel, triggerPoint: 1, distance }
 }
 
-/** happy-dom has no Element.animate; the driver only needs what it returns. */
+/** The driver only needs what animate() returns; the stub records the options it was called with. */
 const captureAnimate = (): KeyframeAnimationOptions[] => {
   const options: KeyframeAnimationOptions[] = []
 

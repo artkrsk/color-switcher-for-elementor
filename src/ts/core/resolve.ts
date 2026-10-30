@@ -17,7 +17,10 @@ import type { TTheme } from '../types'
  * the scalar at its end value immediately, leaving the scrub nothing to do.
  *
  * Where several zones overlap (a marked section inside a marked container)
- * the last in document order decides; both mean the same thing, so nesting
+ * any active instant zone wins over scrubs, whichever comes first in the
+ * document: it flips the page, and the driver treats a scrub toward the state
+ * the page already shows as a no-op. Among scrubs the last in document order
+ * takes the scalar. Instant zones all mean the same thing, so nesting them
  * cannot contradict itself.
  */
 export const resolve = (zones: readonly IZoneSnapshot[], baseline: TTheme): IResolution => {

@@ -24,9 +24,10 @@ define( 'ARTS_COLOR_SWITCHER_PLUGIN_VERSION', '1.0.1' );
 require_once __DIR__ . '/vendor/autoload.php';
 
 // No dependency guard needed: "Requires Plugins: elementor" blocks activation
-// without Elementor on WP 6.5+, and every entry point is an elementor/* hook
-// (inert without it). Plugin extends Base\Plugin (arts/base BasePlugin), which
-// schedules run() on the hook/priority from get_default_run_action().
+// without Elementor on WP 6.5+, and every hook that touches Elementor is
+// either an elementor/* one (inert without it) or checks for its class first.
+// Plugin extends Base\Plugin (arts/base BasePlugin), which schedules run() on
+// the hook/priority from get_default_run_action().
 \Arts\ColorSwitcher\Plugin::instance();
 
 // Registers the shared `scroll-timeline-polyfill` handle the frontend script

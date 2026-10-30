@@ -7,9 +7,9 @@ import { attachToggle } from '@ts/core/toggle'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 /**
- * The controls are the only thing in the plugin that persists anything. These
- * hold them to that: what they store, what they release, and what they say
- * while doing it.
+ * Together with the public `setPreference()`, the controls are the only things
+ * in the plugin that persist anything. These hold them to that: what they
+ * store, what they release, and what they say while doing it.
  */
 
 /** As PHP renders it, minus the icons no assertion here reads. */

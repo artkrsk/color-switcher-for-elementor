@@ -13,8 +13,8 @@
 // Progressive enhancement: where a select can keep the platform's keyboard
 // and touch handling while handing the popup's paint to the page, the list
 // becomes a card the theme can turn. Invisible everywhere else — an
-// unsupported browser keeps the native picker above, and every selector in
-// here fails to parse there rather than half-applying.
+// unsupported browser keeps the native picker above, because the @supports
+// gate skips every rule in here rather than half-applying them.
 @supports (appearance: base-select) {
   .arts-cs-toggle_dropdown .arts-cs-toggle__select {
     // The spec requires opting in BOTH the select and its picker; one
@@ -32,8 +32,6 @@
     gap: 0.4em;
 
     // The chevron stays the platform's; only its answer to :open is ours.
-    // Both endpoints are explicit rotations — interpolating from the
-    // initial `none` is the one step engines still get wrong.
     &::picker-icon {
       transform: rotate(0deg);
       transition: transform 0.2s;

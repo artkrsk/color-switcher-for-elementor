@@ -9,8 +9,9 @@
  * no handler; without this the JS-side zone keeps the settings it booted
  * with while the CSS side has already moved on.
  *
- * Both drive the preview through the public contract and a DOM event; the
- * hook itself never touches preview state directly.
+ * Neither resolves anything itself: the page-theme path moves the baseline
+ * attribute and calls the public `refresh()`, the element path dispatches a
+ * DOM event, and the preview's own runtime does the rest.
  */
 
 import type { HookArgs } from '@artemsemkin/elementor-types'

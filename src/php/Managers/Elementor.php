@@ -14,8 +14,9 @@ class Elementor extends BaseManager {
 	private const VERSION_OPTION = 'arts_color_switcher_version';
 
 	/**
-	 * Elementor constructs the widget itself, so its dependencies are handed
-	 * to the class here rather than to an instance.
+	 * Elementor builds a fresh instance of the registered class for every
+	 * element it renders, so the managers are handed to the class here rather
+	 * than to the instance registered below.
 	 */
 	public function register_widgets( \Elementor\Widgets_Manager $widgets_manager ): void {
 		if ( null === $this->managers ) {

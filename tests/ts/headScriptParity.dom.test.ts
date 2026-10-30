@@ -10,8 +10,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
  * The precedence table is stated twice — once in PHP, inline in <head> so the
  * first paint is already correct, and once in TS, at boot. Nothing imports
  * anything across that gap, and the two are written in different languages
- * against different inputs (a cookie string vs. a parsed one, an inlined PHP
- * flag vs. a DOM attribute).
+ * against different inputs (an inlined PHP flag vs. a DOM attribute).
  *
  * If they ever disagree the page changes theme between first paint and boot —
  * the exact flash the head script exists to prevent, reintroduced by the thing

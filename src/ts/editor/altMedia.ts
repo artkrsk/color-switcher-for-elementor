@@ -142,7 +142,8 @@ export const registerAltMediaView = (): void => {
      * the Alt swatch uses in Site Settings.
      */
     private renderAltTools(): void {
-      // The control re-renders on every value change; ours must not stack up.
+      // Reached from render() and again after every value write, so earlier
+      // nodes must go first or they stack up.
       for (const stale of Array.from(
         this.el.querySelectorAll(`.${CLASS_CHOOSE}, .${CLASS_REMOVE}`)
       )) {

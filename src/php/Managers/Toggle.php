@@ -128,8 +128,8 @@ class Toggle extends BaseManager {
 			'name'       => $text( $args['name'] ?? '', esc_html__( 'Color theme', 'color-switcher-for-elementor' ) ),
 			// What is printed: the author's word, or nothing at all.
 			'labels'     => $labels,
-			// What is announced — and what the Dropdown has no alternative to,
-			// since an option with no text is not a control.
+			// What is announced: the author's word, else the translated default,
+			// since a control with no name is unusable.
 			'names'      => array(
 				'system'  => $text( $labels['system'], esc_html__( 'System', 'color-switcher-for-elementor' ) ),
 				'default' => $text( $labels['default'], esc_html__( 'Light', 'color-switcher-for-elementor' ) ),
@@ -161,8 +161,9 @@ class Toggle extends BaseManager {
 	 *
 	 * `role="switch"` goes only where the control looks like a switch — it is
 	 * announced inconsistently enough that a pressed button is the safer
-	 * reading of an icon. Both are named after the palette they turn on rather
-	 * than after the act of switching, so "Dark, pressed" says something.
+	 * reading of an icon. A two-state control is named after the palette it
+	 * turns on rather than after the act of switching, so "Dark, pressed" says
+	 * something; a cycling one is named for the control and its current state.
 	 *
 	 * @param array{skin: string, mode: string, caption: string, name: string, labels: array<string, string>, names: array<string, string>, icons: array<string, string>, style: string, show_icons: bool} $args
 	 */

@@ -299,7 +299,8 @@ class Toggle extends Widget_Base {
 	}
 
 	/**
-	 * The Separate buttons layout has no track — it is the claim it makes.
+	 * The Switch, the Dropdown and Joined buttons each draw one box to style;
+	 * Separate buttons are independent options with no track.
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -451,8 +452,9 @@ class Toggle extends Widget_Base {
 			)
 		);
 
-		// Above the controls it gates, and gating them: dropping the text is
-		// done by clearing a label, so this is all that is left to decide.
+		// Sits above the icon controls it conditions (buttons_with_icons()).
+		// Dropping the text is done by clearing a label, so icons are all that
+		// is left to switch off.
 		$this->add_control(
 			'buttons_icons',
 			array(

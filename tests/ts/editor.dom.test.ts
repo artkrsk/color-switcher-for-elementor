@@ -5,8 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 /**
  * The editor hook is the piece that keeps the preview honest, and the one
- * that already failed once in a way nothing caught: Elementor regenerates
- * CSS for our controls but calls no handler, so a control change left the
+ * that already failed once in a way nothing caught: a control change left the
  * running zone on its boot-time settings. These tests hold both paths — the
  * page-theme call and the per-element sync event — to that lesson.
  */
@@ -138,12 +137,6 @@ describe('editor hook', () => {
     expect(seen).toEqual(['synced'])
   })
 
-  /**
-   * Editing a control in the panel dispatches the plural form — it supports
-   * multi-select. Reading only `container` made every panel edit a silent
-   * no-op while programmatic calls kept working, which is exactly how this
-   * shipped past a green suite once.
-   */
   it('handles the plural containers the panel dispatches', async () => {
     const { hook, previewDocument, wrapper, calls } = await setUpEditor()
     const element = previewDocument.createElement('div')

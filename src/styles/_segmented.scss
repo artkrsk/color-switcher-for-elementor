@@ -4,7 +4,7 @@
 // padding, the gap between segments, and how many segments there are. So the
 // mark sits exactly inside the padding box, every segment is exactly one
 // column, and the travel is one column PLUS one gap. Hardcoding halves and
-// thirds instead was what left the two layouts looking alike.
+// thirds instead went wrong the moment a gap existed.
 // Doubled, and after the shared layout in _toggle.scss, so the 0.5em gap
 // there cannot win: a gap the mark's travel knows nothing about is a mark
 // that lands short.

@@ -11,10 +11,7 @@ namespace Arts\ColorSwitcher\Tests\Integration;
 abstract class TestCase extends \WP_UnitTestCase {
 
 	/**
-	 * A real site always has a kit; a fresh test DB does not, and Elementor
-	 * itself reads the active kit while registering Container's own controls
-	 * (kit.php reads $this->post->post_status) — so without this, core fatals
-	 * before any assertion of ours runs.
+	 * Creates the kit a fresh test DB does not have.
 	 */
 	public function set_up(): void {
 		parent::set_up();
