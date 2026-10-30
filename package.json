@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Arts Color Switcher for Elementor",
-  "packageManager": "pnpm@12.14.0",
+  "packageManager": "pnpm@12.16.1",
   "engines": {
     "node": ">=24"
   },
@@ -19,14 +19,14 @@
   "devDependencies": {
     "@artemsemkin/elementor-types": "^2.0.0",
     "@arts/wp-plugin-tooling": "github:artkrsk/wp-plugin-tooling",
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.4",
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.1",
     "@vitest/coverage-v8": "^5.0.0",
     "@wordpress/env": "12.0.0",
-    "fallow": "3.34.1",
+    "fallow": "3.37.0",
     "happy-dom": "21.0.4",
-    "knip": "6.41.0",
+    "knip": "6.44.0",
     "lefthook": "^2.1.10",
     "stylelint": "^17.14.1",
     "typescript": "^7.0.2",
