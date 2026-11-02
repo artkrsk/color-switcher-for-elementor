@@ -112,7 +112,7 @@ class Assets extends BaseManager {
 			"if({$auto}&&s){d.setAttribute('data-arts-cs','alt');}})();";
 
 		printf(
-			'<script id="arts-cs-head-js" data-no-optimize="1" data-cfasync="false">%s</script>',
+			'<script id="arts-cs-head-js" data-no-optimize="1" data-cfasync="false" nowprocket>%s</script>',
 			$script // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 	}
