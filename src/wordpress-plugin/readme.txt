@@ -5,7 +5,7 @@ Tags: dark mode, dark mode toggle, night mode, elementor, scroll effects
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0
 GitHub Plugin URI: https://github.com/artkrsk/color-switcher-for-elementor/
@@ -149,7 +149,7 @@ Yes – mark as many as you like. Each one turns the page while it is on screen 
 
 == Changelog ==
 
-= 1.0.3 =
+= 1.0.3 – November 17, 2026 =
 * fixed: Sites running the latest Elementor and Elementor Pro no longer hit a critical error on load when another plugin adds its own controls.
 
 = 1.0.2 – November 2, 2026 =
