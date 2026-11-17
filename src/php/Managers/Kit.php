@@ -22,10 +22,21 @@ class Kit extends BaseManager {
 	 * never configured a single Alt swatch ships neither — and the toggle
 	 * widget uses it to explain itself in the editor rather than render a
 	 * silent no-op.
+	 *
+	 * Answers false, uncached, until `init` has finished: reading the settings
+	 * builds the Kit's tabs, and a tab using a group control that another
+	 * plugin registers at a later `init` priority would wp_die() in
+	 * Controls_Stack::add_group_control(). Elementor 4.4.0 + Pro 4.4.0 build
+	 * stacks at `init` 5, which is how the media scan got here that early.
 	 */
 	public function has_alt_colors(): bool {
 		if ( isset( $this->memo['has_alt'] ) ) {
 			return $this->memo['has_alt'];
+		}
+
+		// did_action() counts from the moment `init` starts, not when it ends.
+		if ( doing_action( 'init' ) || ! did_action( 'init' ) ) {
+			return false;
 		}
 
 		$kit                   = $this->get_active_kit();
