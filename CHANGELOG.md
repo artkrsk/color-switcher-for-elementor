@@ -2,7 +2,7 @@
 
 ## 1.0.3 – November 17, 2026
 
-* fixed: Sites running the latest Elementor and Elementor Pro no longer hit a critical error on load when another plugin adds its own controls.
+* fixed: With Elementor 4.4.0 and Elementor Pro 4.4.0, pages no longer stop loading with a "Group not found" error when another plugin adds its own controls to Site Settings.
 
 ## 1.0.2 – November 2, 2026
 
