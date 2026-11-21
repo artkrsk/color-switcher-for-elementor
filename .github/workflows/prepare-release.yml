@@ -34,7 +34,7 @@ permissions:
 
 jobs:
   prepare:
-    uses: artkrsk/wordpress-plugin-workflows/.github/workflows/prepare-release.yml@main
+    uses: artkrsk/wordpress-plugin-workflows/.github/workflows/prepare-release.yml@artkrsk/wordpress-bump-in-release
     with:
       client_id: ${{ vars.RELEASE_BOT_CLIENT_ID }}
       version: ${{ inputs.version }}

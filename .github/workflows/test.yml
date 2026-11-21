@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   test:
-    uses: artkrsk/wordpress-plugin-workflows/.github/workflows/test.yml@main
+    uses: artkrsk/wordpress-plugin-workflows/.github/workflows/test.yml@artkrsk/wordpress-bump-in-release
     with:
       zip_budget_mb: '0.5'
       # The scope sniffs flag the unconditional frontend enqueue, which is a
