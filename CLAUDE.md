@@ -33,7 +33,7 @@ Hooks: lefthook pre-commit (format + typecheck, auto-fixes re-staged) and pre-pu
 
 ## Architecture
 
-- **`src/php/Plugin.php`** — composition root. Extends `Base\Plugin` (arts/base `BasePlugin`), runs on `plugins_loaded` priority 20, wires the managers: `assets` (handles, the polyfill dependency, the pre-paint head script), `documents` (page-theme control + the baseline attributes), `elements` (the container/section control section), `elementor` (one Elementor cache clear per plugin version, widget registration), `kit` (Alt swatch injection), `media` (the Alt image control), `toggle` (every skin's markup + the shortcode).
+- **`src/php/Plugin.php`** — composition root. Extends `Base\Plugin` (arts/base `BasePlugin`), runs on `plugins_loaded` priority 20, wires the managers: `assets` (handles, the polyfill dependency, the pre-paint head script), `documents` (page-theme control + the baseline attributes), `elements` (the container/section control section), `elementor` (widget registration), `kit` (Alt swatch injection), `media` (the Alt image control), `toggle` (every skin's markup + the shortcode); it also registers the Elementor cache clear (arts/base `CacheClear::on_version()`).
 - **`src/php/Controls/AltMedia.php`** — `Control_Media` subclass, type `arts_cs_media`. Owns the Alt sub-keys, the panel's words (as a control arg, so they stay translatable), and `get_style_value()`.
 - **`src/php/Managers/Media.php`** — registers that control and re-types every image media control on the site as each section closes.
 - **`src/ts/editor/altMedia.ts`** — the editor view: injects the Alt button into the stock control's own tools row and owns a second `wp.media` frame.
@@ -58,7 +58,7 @@ Hooks: lefthook pre-commit (format + typecheck, auto-fixes re-staged) and pre-pu
 - Custom properties: `--arts-cs-p` (the scalar), `--arts-cs-duration`, `--arts-cs-ease`, `--arts-cs-admin-bar`, the per-color `--arts-cs-c-{id}` / `--arts-cs-c-{id}-alt` pair, and the timeline name `--arts-cs-zone`.
 - Events fired: `arts-cs:change` (`detail: { theme, source }`) and `arts-cs:settings-sync` (editor-only). Consumed: `arts/ajax/transition/sync/before`, `arts-hs:ready`. Filter consumed: `arts/scroll_timeline_polyfill/skipped_styles`.
 - Control type `arts_cs_media`, its value sub-keys `arts_cs_alt_url` / `arts_cs_alt_id`, and its label arg `arts_cs_alt_labels`. The sub-keys are the hardest of these to change: they live INSIDE other widgets' saved settings, so a rename after release is a data migration across every `_elementor_data` blob rather than an edit. Pinned across languages in `tests/ts/phpParity.test.ts`.
-- Control ids `arts_cs_enabled`, `arts_cs_viewport`, `arts_cs_viewport_hint`, `arts_cs_page_theme`; section `section_arts_cs`; kit repeater field `color_alt`; option key `arts_color_switcher_version`; cookie `arts_cs_pref`; shortcode `arts_color_switcher_toggle`.
+- Control ids `arts_cs_enabled`, `arts_cs_viewport`, `arts_cs_viewport_hint`, `arts_cs_page_theme`; section `section_arts_cs`; kit repeater field `color_alt`; option key `arts_elementor_cache_color-switcher` (arts/base `CacheClear`, one Elementor cache clear per version); cookie `arts_cs_pref`; shortcode `arts_color_switcher_toggle`.
 - `window.ArtsColorSwitcher` and its `contract` number — README.md's Integration contract table is the published, public subset of this list, and `contract` bumps only on a breaking change to that table.
 
 ## Decided — don't reintroduce or "fix"

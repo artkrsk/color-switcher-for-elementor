@@ -2,6 +2,8 @@
 
 namespace Arts\ColorSwitcher;
 
+use ArtsColorSwitcher\Arts\Base\Elementor\CacheClear;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -46,7 +48,7 @@ final class Plugin extends Base\Plugin {
 		add_action( 'elementor/controls/register', array( $this->managers->media, 'register_control' ) );
 		add_action( 'elementor/element/before_section_end', array( $this->managers->media, 'upgrade_media_controls' ), 10, 3 );
 		add_action( 'elementor/documents/register_controls', array( $this->managers->documents, 'register_document_controls' ) );
-		add_action( 'elementor/init', array( $this->managers->elementor, 'maybe_clear_cache_on_version_change' ) );
+		CacheClear::on_version( 'color-switcher', ARTS_COLOR_SWITCHER_PLUGIN_VERSION );
 		add_action( 'elementor/widgets/register', array( $this->managers->elementor, 'register_widgets' ) );
 		add_action( 'init', array( $this->managers->toggle, 'register_shortcode' ) );
 		add_action( 'wp_head', array( $this->managers->assets, 'print_head_script' ), 1 );
