@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 – November 24, 2026
+
+* improved: confirmed compatibility with WordPress 7.2.
+
 ## 1.0.3 – November 17, 2026
 
 * fixed: With Elementor 4.4.0 and Elementor Pro 4.4.0, pages no longer stop loading with a "Group not found" error when another plugin adds its own controls to Site Settings.
